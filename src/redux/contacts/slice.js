@@ -61,7 +61,7 @@ export const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  //стара нотація
+  // стара нотація
   // extraReducers: {
   //   [fetchContacts.pending](state, action) {
   //     state.isLoading = true;
@@ -80,6 +80,7 @@ export const contactsSlice = createSlice({
   //   },
   //   [addContsct.fulfilled](state, action) {
   //     state.isLoading = false;
+  //     state.items.push(action.payload);
   //   },
   //   [addContsct.rejected](state, action) {
   //     state.isLoading = false;
@@ -89,6 +90,7 @@ export const contactsSlice = createSlice({
   //   },
   //   [deleteContact.fulfilled](state, action) {
   //     state.isLoading = false;
+  //     state.items = state.items.filter(item => item.id !== action.payload.id);
   //   },
   //   [deleteContact.rejected](state, action) {
   //     state.isLoading = false;
