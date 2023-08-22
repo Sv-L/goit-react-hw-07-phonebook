@@ -2,6 +2,7 @@ import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { addContsct, getContacts } from 'redux/contacts/slice';
+import { Notify } from 'notiflix';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -46,7 +47,7 @@ const ContactForm = () => {
       await dispatch(addContsct(newContact));
       reset();
     } else {
-      alert(`${name} is already in contacts.`);
+      Notify.failure(`${name} is already in contacts.`);
     }
     document.activeElement.blur();
   };
