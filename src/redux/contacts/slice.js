@@ -28,7 +28,7 @@ export const addContsct = createAsyncThunk(
     try {
       const response = await axios.post('/contacts', newContact);
       if (response.statusText === 'Created') {
-        dispatch(fetchContacts());
+        return response.data;
       } else {
         throw new Error();
       }
@@ -44,7 +44,7 @@ export const deleteContact = createAsyncThunk(
     try {
       const response = await axios.delete(`/contacts/${id}`);
       if (response.statusText === 'OK') {
-        dispatch(fetchContacts());
+        return response.data;
       } else {
         throw new Error();
       }
@@ -108,11 +108,12 @@ export const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(addContsct.pending, state => {
+      .addCase(addContsct.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(addContsct.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.items.push(action.payload);
       })
       .addCase(addContsct.rejected, (state, action) => {
         state.isLoading = false;
@@ -122,6 +123,7 @@ export const contactsSlice = createSlice({
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.items = state.items.filter(item => item.id !== action.payload.id);
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.isLoading = false;
