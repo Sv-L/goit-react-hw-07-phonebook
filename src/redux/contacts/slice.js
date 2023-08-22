@@ -9,7 +9,6 @@ export const fetchContacts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('/contacts');
-      console.log(response);
       if (response.statusText === 'OK') {
         return response.data;
       } else {
@@ -62,37 +61,71 @@ export const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  extraReducers: {
-    [fetchContacts.pending](state, action) {
-      state.isLoading = true;
-      state.error = null;
-    },
-    [fetchContacts.fulfilled](state, action) {
-      state.isLoading = false;
-      state.items = action.payload;
-    },
-    [fetchContacts.rejected](state, action) {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [addContsct.pending](state) {
-      state.isLoading = true;
-    },
-    [addContsct.fulfilled](state, action) {
-      state.isLoading = false;
-    },
-    [addContsct.rejected](state, action) {
-      state.isLoading = false;
-    },
-    [deleteContact.pending](state) {
-      state.isLoading = true;
-    },
-    [deleteContact.fulfilled](state, action) {
-      state.isLoading = false;
-    },
-    [deleteContact.rejected](state, action) {
-      state.isLoading = false;
-    },
+  //стара нотація
+  // extraReducers: {
+  //   [fetchContacts.pending](state, action) {
+  //     state.isLoading = true;
+  //     state.error = null;
+  //   },
+  //   [fetchContacts.fulfilled](state, action) {
+  //     state.isLoading = false;
+  //     state.items = action.payload;
+  //   },
+  //   [fetchContacts.rejected](state, action) {
+  //     state.isLoading = false;
+  //     state.error = action.payload;
+  //   },
+  //   [addContsct.pending](state) {
+  //     state.isLoading = true;
+  //   },
+  //   [addContsct.fulfilled](state, action) {
+  //     state.isLoading = false;
+  //   },
+  //   [addContsct.rejected](state, action) {
+  //     state.isLoading = false;
+  //   },
+  //   [deleteContact.pending](state) {
+  //     state.isLoading = true;
+  //   },
+  //   [deleteContact.fulfilled](state, action) {
+  //     state.isLoading = false;
+  //   },
+  //   [deleteContact.rejected](state, action) {
+  //     state.isLoading = false;
+  //   },
+  // },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.pending, (state, action) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items = action.payload;
+      })
+      .addCase(fetchContacts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(addContsct.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(addContsct.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(addContsct.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteContact.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.isLoading = false;
+      });
   },
 });
 
